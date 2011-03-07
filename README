@@ -1,1 +1,4 @@
-This project provides basic encrypted SMS.
+README
+
+This app gives you a text window with a button that does ROT-13 on messages
+that you can enter.
