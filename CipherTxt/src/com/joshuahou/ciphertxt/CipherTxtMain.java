@@ -7,26 +7,29 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class CipherTxtMain extends Activity {
-    private final String password = "password";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        final EditText editText = (EditText) findViewById(R.id.edittext);
+        final EditText editText = (EditText) findViewById(R.id.message);
         final Button encryptButton = (Button) findViewById(R.id.encryptbutton);
         encryptButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
+                String password = ((EditText) findViewById(R.id.password)).getText().toString();
                 editText.setText(encrypt(password, editText.getText().toString()));
             }
         });
     }
 
-    private String encrypt(String password, String message) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < message.length(); i++) {
-            builder.append((char)(password.charAt(i % password.length()) ^ message.charAt(i)));
+    private static String encrypt(String password, String message) {
+        byte[] messageBytes = message.getBytes();
+        byte[] passwordBytes = password.getBytes();
+        byte[] encryptedBytes = new byte[messageBytes.length];
+
+        for (int i = 0; i < messageBytes.length; i++) {
+            encryptedBytes[i] = (byte) (messageBytes[i] ^ passwordBytes[i % passwordBytes.length]);
         }
-        return builder.toString();
+        return new String(encryptedBytes);
     }
 }
