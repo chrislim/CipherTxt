@@ -30,11 +30,29 @@ public class CipherTxtMain extends Activity {
         });
     }
 
+    private boolean validate(String password, String message) {
+        if (password.length() < 1) {
+            Toast.makeText(CipherTxtMain.this, "Password field must not be empty.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (message.length() < 1) {
+            Toast.makeText(CipherTxtMain.this, "Message field must not be empty.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     private String encrypt(String password, String message) {
+        if (!validate(password, message)) {
+            return message;
+        }
         return String.format("(%s)", xor(password, message));
     }
 
     private String decrypt(String password, String message) {
+        if (!validate(password, message)) {
+            return message;
+        }
         String encrypted = message.trim();
         if (encrypted.charAt(0) != '(' || encrypted.charAt(encrypted.length() - 1) != ')') {
             Toast.makeText(CipherTxtMain.this, "Improperly formatted message block.", Toast.LENGTH_SHORT).show();

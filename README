@@ -2,8 +2,3 @@ README
 
 This app gives you a text window with a button that does XOR cipher on messages
 with a given password.
-
-Known issues:
-
-Application dies if either encrypt button or decrypt button is pressed and one
-or both fields are empty.
