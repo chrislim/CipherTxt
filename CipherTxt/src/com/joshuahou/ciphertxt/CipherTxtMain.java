@@ -5,24 +5,47 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class CipherTxtMain extends Activity {
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
         final EditText editText = (EditText) findViewById(R.id.message);
         final Button encryptButton = (Button) findViewById(R.id.encryptbutton);
-        encryptButton.setOnClickListener(new View.OnClickListener(){
+        encryptButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String password = ((EditText) findViewById(R.id.password)).getText().toString();
                 editText.setText(encrypt(password, editText.getText().toString()));
             }
         });
+
+        final Button decryptButton = (Button) findViewById(R.id.decryptbutton);
+        decryptButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String password = ((EditText) findViewById(R.id.password)).getText().toString();
+                editText.setText(decrypt(password, editText.getText().toString()));
+            }
+        });
     }
 
-    private static String encrypt(String password, String message) {
+    private String encrypt(String password, String message) {
+        return String.format("(%s)", xor(password, message));
+    }
+
+    private String decrypt(String password, String message) {
+        String encrypted = message.trim();
+        if (encrypted.charAt(0) != '(' || encrypted.charAt(encrypted.length() - 1) != ')') {
+            Toast.makeText(CipherTxtMain.this, "Improperly formatted message block.", Toast.LENGTH_SHORT).show();
+            return message;
+        }
+
+        encrypted = encrypted.substring(1, encrypted.length() - 1);
+        return xor(password, encrypted);
+    }
+
+    private String xor(String password, String message) {
         byte[] messageBytes = message.getBytes();
         byte[] passwordBytes = password.getBytes();
         byte[] encryptedBytes = new byte[messageBytes.length];

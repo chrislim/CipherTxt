@@ -3,4 +3,5 @@
     <string name="hello">Hello Japan!</string>
     <string name="app_name">CipherTxt</string>
     <string name="encrypt">Encrypt</string>
+    <string name="decrypt">Decrypt</string>
 </resources>
