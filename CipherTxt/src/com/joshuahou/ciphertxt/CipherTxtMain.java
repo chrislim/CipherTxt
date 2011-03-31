@@ -2,6 +2,7 @@ package com.joshuahou.ciphertxt;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,15 @@ public class CipherTxtMain extends Activity {
                 editText.setText(decrypt(password, editText.getText().toString()));
             }
         });
+
+        final ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        final Button copyButton = (Button) findViewById(R.id.copybutton);
+        copyButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                clipboardManager.setText(editText.getText());
+            }
+        });
+
     }
 
     private boolean validate(String password, String message) {
