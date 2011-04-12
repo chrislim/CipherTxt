@@ -23,6 +23,8 @@
     <EditText
         android:id="@+id/password"
         android:layout_width="fill_parent"
+        android:capitalize="none"
+        android:password="true"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:gravity="top"/>
