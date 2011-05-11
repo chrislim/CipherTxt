@@ -12,32 +12,24 @@ public class CipherTxtMain extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+    }
 
-        final EditText editText = (EditText) findViewById(R.id.message);
-        final Button encryptButton = (Button) findViewById(R.id.encryptbutton);
-        encryptButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                String password = ((EditText) findViewById(R.id.password)).getText().toString();
-                editText.setText(encrypt(password, editText.getText().toString()));
-            }
-        });
+    public void decryptButtonClick(View button) {
+        EditText editText = (EditText) findViewById(R.id.message);
+        String password = ((EditText) findViewById(R.id.password)).getText().toString();
+        editText.setText(decrypt(password, editText.getText().toString()));
+    }
 
-        final Button decryptButton = (Button) findViewById(R.id.decryptbutton);
-        decryptButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                String password = ((EditText) findViewById(R.id.password)).getText().toString();
-                editText.setText(decrypt(password, editText.getText().toString()));
-            }
-        });
+    public void encryptButtonClick(View button) {
+        EditText editText = (EditText) findViewById(R.id.message);
+        String password = ((EditText) findViewById(R.id.password)).getText().toString();
+        editText.setText(encrypt(password, editText.getText().toString()));
+    }
 
-        final ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        final Button copyButton = (Button) findViewById(R.id.copybutton);
-        copyButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                clipboardManager.setText(editText.getText());
-            }
-        });
-
+    public void copyButtonClick(View button) {
+        EditText editText = (EditText) findViewById(R.id.message);
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager.setText(editText.getText());
     }
 
     private boolean validate(String password, String message) {

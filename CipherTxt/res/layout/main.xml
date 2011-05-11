@@ -34,14 +34,17 @@
         <Button android:id="@+id/encryptbutton"
             android:text="@string/encrypt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="encryptButtonClick"/>
         <Button android:id="@+id/decryptbutton"
                 android:text="@string/decrypt"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:onClick="decryptButtonClick"/>
         <Button android:id="@+id/copybutton"
                 android:text="@string/copy"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:onClick="copyButtonClick"/>
     </LinearLayout>
 </LinearLayout>
