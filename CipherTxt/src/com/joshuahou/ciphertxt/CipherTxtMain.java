@@ -3,6 +3,7 @@ package com.joshuahou.ciphertxt;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.ClipboardManager;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +49,8 @@ public class CipherTxtMain extends Activity {
         if (!validate(password, message)) {
             return message;
         }
-        return String.format("(%s)", xor(password, message));
+        String encryptedMessage = Base64.encodeToString(xor(message.getBytes(), password.getBytes()), Base64.NO_WRAP);
+        return String.format("%s", encryptedMessage);
     }
 
     private String decrypt(String password, String message) {
@@ -56,23 +58,22 @@ public class CipherTxtMain extends Activity {
             return message;
         }
         String encrypted = message.trim();
-        if (encrypted.charAt(0) != '(' || encrypted.charAt(encrypted.length() - 1) != ')') {
+
+        try {
+            byte[] decoded = Base64.decode(encrypted, Base64.NO_WRAP);
+            return new String(xor(decoded, password.getBytes()));
+        } catch (IllegalArgumentException e) {
             Toast.makeText(CipherTxtMain.this, "Improperly formatted message block.", Toast.LENGTH_SHORT).show();
             return message;
         }
-
-        encrypted = encrypted.substring(1, encrypted.length() - 1);
-        return xor(password, encrypted);
     }
 
-    private String xor(String password, String message) {
-        byte[] messageBytes = message.getBytes();
-        byte[] passwordBytes = password.getBytes();
-        byte[] encryptedBytes = new byte[messageBytes.length];
+    private byte[] xor(byte[] message, byte[] password) {
+        byte[] out = new byte[message.length];
 
-        for (int i = 0; i < messageBytes.length; i++) {
-            encryptedBytes[i] = (byte) (messageBytes[i] ^ passwordBytes[i % passwordBytes.length]);
+        for (int i = 0; i < message.length; i++) {
+            out[i] = (byte) (message[i] ^ password[i % password.length]);
         }
-        return new String(encryptedBytes);
+        return out;
     }
 }
