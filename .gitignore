@@ -2,3 +2,4 @@ CipherTxt/out
 */*.iml
 .idea
 gen
+out/*
